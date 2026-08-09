@@ -1,1 +1,25 @@
 
+name: Across Jobs Example
+on: workflow_dispatch
+
+jobs:
+  job_one:
+    runs-on: ubuntu-latest
+    # Map the internal step output to a global job output
+    outputs:
+      shared_token: ${{ steps.create_token.outputs.token }}
+    steps:
+      - name: Create a token
+        id: create_token
+        run: |
+          echo "token=token_12345" >> "$GITHUB_OUTPUT"
+
+  job_two:
+    runs-on: ubuntu-latest
+    # Wait for job_one to finish before starting
+    needs: job_one
+    steps:
+      - name: Use the token from job_one
+        run: |
+          # Reference the output using the context: needs.<job_id>.outputs.<key>
+          echo "The token passed to this job is ${{ needs.job_one.outputs.shared_token }}"
