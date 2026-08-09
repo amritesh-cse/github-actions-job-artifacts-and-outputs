@@ -15,5 +15,16 @@ jobs:
           path: |
             output1.txt
             output2.txt
-
+  job_b:
+    runs-on: ubuntu-latest
+    needs: job_a # 👈 Required here so that upload can happen first.
+    steps:
+      - name: Download artifact  
+        uses: actions/download-artifact@v4
+        with:
+          name: my-artifact
+      # After downloading, the folder contents are automatically moved to the unzipped folder,
+      # and the terminal is automatically navigated to that location.
+      - name: List the downloaded files
+        run: ls
 
