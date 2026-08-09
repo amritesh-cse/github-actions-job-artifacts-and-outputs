@@ -1,0 +1,25 @@
+name: Job Artifacts
+on: workflow_dispatch
+jobs:
+  job_a:
+    runs-on: ubuntu-latest
+    steps:
+      
+      - name: Create a file to upload
+        run: echo "hello" > output.txt
+      - name: Download artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-artifact
+          path: output.txt
+
+  job_b:
+    runs-on: ubuntu-latest
+    needs: job_a
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: my-artifact
+      - name: Output content list
+        run: ls
