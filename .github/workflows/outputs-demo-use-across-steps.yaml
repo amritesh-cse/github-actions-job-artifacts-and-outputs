@@ -1,0 +1,20 @@
+name: Across Steps Example
+on: workflow_dispatch
+
+jobs:
+  across-steps-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate data
+        id: source_step
+        run: |
+          # Store the output using GITHUB_OUTPUT
+          echo "generated_version=v2.4.1" >> "$GITHUB_OUTPUT"
+          echo "Location of GITHUB_OUTPUT FILE $GITHUB_OUTPUT"
+          cat $GITHUB_OUTPUT
+
+      - name: Consume data
+        run: |
+          echo "Location of GITHUB_OUTPUT FILE $GITHUB_OUTPUT"
+          # Reference the output using the context: steps.<step_id>.outputs.<key>
+          echo "The version retrieved is ${{ steps.source_step.outputs.generated_version }}"
