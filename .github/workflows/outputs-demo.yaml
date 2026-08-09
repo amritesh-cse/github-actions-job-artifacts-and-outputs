@@ -1,0 +1,14 @@
+name: Same Step Example
+on: workflow_dispatch
+
+jobs:
+  same-step-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate and use local variable
+        run: |
+          # Store the output in a standard shell variable
+          MY_TIME=$(date)
+          
+          # Use it immediately within the same shell environment
+          echo "The current time is $MY_TIME"
