@@ -1,6 +1,6 @@
 name: Deploy website
 on:
-  push:
+  #push:
     #branches:
      # - main
   workflow_dispatch:
