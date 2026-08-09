@@ -22,4 +22,4 @@ jobs:
         with:
           name: my-artifact
       - name: Output content list
-        run: ls
+        run: ls -a
